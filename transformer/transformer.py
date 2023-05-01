@@ -26,7 +26,7 @@ class Transformer(nn.Module):
 
         self.encoder = nn.ModuleList([
             TransformerEncoderLayer(
-                model_dim=self.model_dim,
+                model_dim=model_dim,
                 mlp_hidden_dim=feed_forward_hidden_dim,
                 number_attention_heads=number_attention_heads,
                 attention_dropout_rate=attention_dropout_rate,
@@ -36,7 +36,7 @@ class Transformer(nn.Module):
 
         self.decoder = nn.ModuleList([
             TransformerEncoderLayer(
-                model_dim=self.model_dim,
+                model_dim=model_dim,
                 mlp_hidden_dim=feed_forward_hidden_dim,
                 number_attention_heads=number_attention_heads,
                 attention_dropout_rate=attention_dropout_rate,

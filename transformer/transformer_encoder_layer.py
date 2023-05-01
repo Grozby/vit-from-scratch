@@ -28,18 +28,18 @@ class TransformerEncoderLayer(nn.Module):
         self.mlp_dropout_rate = mlp_dropout_rate
 
         self.multi_attention_head = MultiHeadAttention(
-            model_dim=self.model_dim,
-            number_attention_heads=self.number_attention_heads,
-            dropout_rate=self.attention_dropout_rate,
+            model_dim=model_dim,
+            number_attention_heads=number_attention_heads,
+            dropout_rate=attention_dropout_rate,
         )
-        self.attention_layer_norm = nn.LayerNorm(self.model_dim)
+        self.attention_layer_norm = nn.LayerNorm(model_dim)
         self.mlp = TransformerMLP(
-            in_features=self.model_dim,
+            in_features=model_dim,
             hidden_features=self.feed_forward_hidden_dim,
-            dropout_rate=self.mlp_dropout_rate,
+            dropout_rate=mlp_dropout_rate,
             activation_function=mlp_activation_function,
         )
-        self.mlp_layer_norm = nn.LayerNorm(self.model_dim)
+        self.mlp_layer_norm = nn.LayerNorm(model_dim)
 
     def forward(self, x: torch.Tensor):
         attention = self.multi_attention_head(

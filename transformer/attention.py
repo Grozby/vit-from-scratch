@@ -18,16 +18,16 @@ class AttentionScaledDotProduct(nn.Module):
         self.embedding_dim = embedding_dim
 
         self.linear_queries = nn.Linear(
-            in_features=self.model_dim,
-            out_features=self.embedding_dim,
+            in_features=model_dim,
+            out_features=embedding_dim,
         )
         self.linear_keys = nn.Linear(
-            in_features=self.model_dim,
-            out_features=self.embedding_dim,
+            in_features=model_dim,
+            out_features=embedding_dim,
         )
         self.linear_values = nn.Linear(
-            in_features=self.model_dim,
-            out_features=self.embedding_dim,
+            in_features=model_dim,
+            out_features=embedding_dim,
         )
 
     def forward(

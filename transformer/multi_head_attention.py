@@ -23,14 +23,14 @@ class MultiHeadAttention(nn.Module):
 
         self.attention_heads = nn.ModuleList([
             AttentionScaledDotProduct(
-                model_dim=self.model_dim,
+                model_dim=model_dim,
                 embedding_dim=self.embedding_dim,
-                dropout_rate=self.dropout_rate,
+                dropout_rate=dropout_rate,
             ) for _ in range(number_attention_heads)
         ])
         self.linear = nn.Linear(
-            in_features=self.model_dim,
-            out_features=self.model_dim,
+            in_features=model_dim,
+            out_features=model_dim,
             bias=False,
         )
 
