@@ -12,7 +12,8 @@ class Transformer(nn.Module):
         feed_forward_hidden_dim: int,
         number_attention_heads: int,
         number_stacks: int,
-        dropout_rate: float = 0.0,
+        attention_dropout_rate: float = 0.0,
+        mlp_dropout_rate: float = 0.0,
         *args,
         **kwargs,
     ):
@@ -20,13 +21,16 @@ class Transformer(nn.Module):
         self.model_dim = model_dim
         self.feed_forward_hidden_dim = feed_forward_hidden_dim
         self.number_attention_heads = number_attention_heads
-        self.dropout_rate = dropout_rate
+        self.attention_dropout_rate = attention_dropout_rate
+        self.mlp_dropout_rate = mlp_dropout_rate
 
         self.encoder = nn.ModuleList([
             TransformerEncoderLayer(
                 model_dim=self.model_dim,
                 mlp_hidden_dim=feed_forward_hidden_dim,
                 number_attention_heads=number_attention_heads,
+                attention_dropout_rate=attention_dropout_rate,
+                mlp_dropout_rate=mlp_dropout_rate,
             ) for _ in range(number_stacks)
         ])
 
@@ -35,6 +39,8 @@ class Transformer(nn.Module):
                 model_dim=self.model_dim,
                 mlp_hidden_dim=feed_forward_hidden_dim,
                 number_attention_heads=number_attention_heads,
+                attention_dropout_rate=attention_dropout_rate,
+                mlp_dropout_rate=mlp_dropout_rate,
             ) for _ in range(number_stacks)
         ])
 
