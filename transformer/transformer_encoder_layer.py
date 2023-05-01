@@ -44,7 +44,12 @@ class TransformerEncoderLayer(nn.Module):
         )
         self.mlp_layer_norm = nn.LayerNorm(model_dim)
 
-    def forward_layer_norm_after(self, x: torch.Tensor) -> torch.Tensor:
+    def forward_layer_norm_after(
+        self,
+        x: torch.Tensor,
+        *args,
+        **kwargs,
+    ) -> torch.Tensor:
         attention = self.multi_attention_head(
             queries=x,
             keys=x,
@@ -53,7 +58,12 @@ class TransformerEncoderLayer(nn.Module):
         x = self.layer_norm_attention(x + attention)
         return self.mlp_layer_norm(x + self.mlp(x))
 
-    def forward_layer_norm_before(self, x: torch.Tensor) -> torch.Tensor:
+    def forward_layer_norm_before(
+        self,
+        x: torch.Tensor,
+        *args,
+        **kwargs,
+    ) -> torch.Tensor:
         previous = x
         x = self.attention_layer_norm(x)
         x = self.multi_attention_head(
@@ -66,11 +76,11 @@ class TransformerEncoderLayer(nn.Module):
         x = self.mlp(x)
         return x + previous
 
-    def forward(self, x: torch.Tensor):
+    def forward(self, x: torch.Tensor, *args, **kwargs):
         if self.order_layer_norm == "after":
-            return self.forward_layer_norm_after(x)
+            return self.forward_layer_norm_after(x, *args, **kwargs)
         elif self.order_layer_norm == "before":
-            return self.forward_layer_norm_before(x)
+            return self.forward_layer_norm_before(x, *args, **kwargs)
         else:
             raise NotImplementedError(
                 f"`self.order_layer_norm` can be either `after` or `before`, "
