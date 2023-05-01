@@ -1,3 +1,5 @@
+from typing import Optional
+
 import torch
 import torch.nn as nn
 
@@ -14,6 +16,7 @@ class Transformer(nn.Module):
         number_stacks: int,
         attention_dropout_rate: float = 0.0,
         mlp_dropout_rate: float = 0.0,
+        number_classes: Optional[int] = None,
         *args,
         **kwargs,
     ):
@@ -44,9 +47,10 @@ class Transformer(nn.Module):
             ) for _ in range(number_stacks)
         ])
 
+        out_features = model_dim if number_classes is None else number_classes
         self.linear = nn.Linear(
-            in_features=self.model_dim,
-            out_features=self.model_dim,
+            in_features=model_dim,
+            out_features=out_features,
         )
         self.log_softmax = nn.LogSoftmax()
 
