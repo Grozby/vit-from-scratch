@@ -32,8 +32,8 @@ class TransformerMLP(nn.Module):
             activation_function = nn.ReLU()
         self.activation = activation_function
 
-    def forward(self, inputs: torch.Tensor, *args, is_training: bool = True):
-        x = self.first_linear(inputs)
+    def forward(self, x: torch.Tensor, *args, is_training: bool = True):
+        x = self.first_linear(x)
         x = self.activation(x)
         x = torch.dropout(x, p=self.dropout_rate, train=is_training)
         x = self.second_linear(x)
