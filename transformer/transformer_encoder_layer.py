@@ -22,7 +22,7 @@ class TransformerEncoderLayer(nn.Module):
     ):
         super().__init__(*args, **kwargs)
         self.model_dim = model_dim
-        self.feed_forward_hidden_dim = mlp_hidden_dim
+        self.mlp_hidden_dim = mlp_hidden_dim
         self.number_attention_heads = number_attention_heads
         self.attention_dropout_rate = attention_dropout_rate
         self.mlp_dropout_rate = mlp_dropout_rate
@@ -35,7 +35,7 @@ class TransformerEncoderLayer(nn.Module):
         self.attention_layer_norm = nn.LayerNorm(model_dim)
         self.mlp = TransformerMLP(
             in_features=model_dim,
-            hidden_features=self.feed_forward_hidden_dim,
+            hidden_features=mlp_hidden_dim,
             dropout_rate=mlp_dropout_rate,
             activation_function=mlp_activation_function,
         )
