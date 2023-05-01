@@ -20,7 +20,13 @@ class TransformerDecoderLayer(TransformerEncoderLayer):
         )
         self.masked_attention_layer_norm = nn.LayerNorm(self.model_dim)
 
-    def forward(self, x: torch.Tensor, x_decoder: torch.Tensor):
+    def forward_layer_norm_after(
+        self,
+        x: torch.Tensor,
+        x_decoder: torch.Tensor,
+        *args,
+        **kwargs,
+    ) -> torch.Tensor:
         masked_attention = self.masked_multi_attention_head(
             queries=x,
             keys=x,
@@ -34,4 +40,34 @@ class TransformerDecoderLayer(TransformerEncoderLayer):
             values=x_decoder,
         )
         x = self.attention_layer_norm(x + attention)
+
         return self.mlp_layer_norm(x + self.mlp(x))
+
+
+    def forward_layer_norm_before(
+        self,
+        x: torch.Tensor,
+        x_decoder: torch.Tensor,
+        *args,
+        **kwargs,
+    ) -> torch.Tensor:
+        previous = x
+        x = self.masked_attention_layer_norm(x)
+        x = self.masked_multi_attention_head(
+            queries=x,
+            keys=x,
+            values=x,
+        )
+        previous = x = previous + x
+
+        x = self.attention_layer_norm(x)
+        x = self.multi_attention_head(
+            queries=x,
+            keys=x_decoder,
+            values=x_decoder,
+        )
+        previous = x = previous + x
+
+        x = self.mlp_layer_norm(x)
+        x = self.mlp(x)
+        return previous + x
