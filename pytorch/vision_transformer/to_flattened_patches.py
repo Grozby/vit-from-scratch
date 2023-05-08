@@ -3,8 +3,8 @@ from typing import Union, Tuple
 import torch
 import torch.nn as nn
 
-from vision_transformer.class_token import ClassToken
-from vision_transformer.positional_embedding import PositionalEmbedding
+from pytorch.vision_transformer.class_token import ClassToken
+from pytorch.vision_transformer.positional_embedding import PositionalEmbedding
 
 
 def to_tuple(x: Union[int, Tuple[int, int]]) -> Tuple[int, int]:

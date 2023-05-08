@@ -3,8 +3,8 @@ from typing import Optional
 import torch
 import torch.nn as nn
 
-from transformer.multi_head_attention import MultiHeadAttention
-from transformer.transformer_mlp import TransformerMLP
+from pytorch.transformer.multi_head_attention import MultiHeadAttention
+from pytorch.transformer.transformer_mlp import TransformerMLP
 
 
 class TransformerEncoderLayer(nn.Module):

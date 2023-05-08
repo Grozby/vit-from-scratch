@@ -1,7 +1,7 @@
 import torch
 import torch.nn as nn
 
-from transformer.attention import AttentionScaledDotProduct
+from pytorch.transformer.attention import AttentionScaledDotProduct
 
 
 class MultiHeadAttention(nn.Module):

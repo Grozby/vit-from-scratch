@@ -1,8 +1,8 @@
 import torch
 import torch.nn as nn
 
-from transformer.multi_head_attention import MultiHeadAttention
-from transformer.transformer import TransformerEncoderLayer
+from pytorch.transformer.multi_head_attention import MultiHeadAttention
+from pytorch.transformer.transformer import TransformerEncoderLayer
 
 
 class TransformerDecoderLayer(TransformerEncoderLayer):
