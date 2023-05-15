@@ -6,7 +6,7 @@ from pytorch.transformer.attention import AttentionScaledDotProduct
 
 class MultiHeadAttention(nn.Module):
 
-    def __init(
+    def __init__(
         self,
         model_dim: int,
         number_attention_heads: int,
@@ -15,7 +15,7 @@ class MultiHeadAttention(nn.Module):
         **kwargs,
     ):
         assert model_dim % number_attention_heads == 0
-        super().__init(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.model_dim = model_dim
         self.embedding_dim = model_dim // number_attention_heads
         self.dropout_rate = dropout_rate
