@@ -30,6 +30,7 @@ class AttentionScaledDotProduct(nn.Module):
             out_features=embedding_dim,
         )
         self.dropout = nn.Dropout(p=dropout_rate)
+        self.root_model_dim = model_dim ** 0.5
 
     def forward(
         self,
@@ -42,7 +43,7 @@ class AttentionScaledDotProduct(nn.Module):
         v = self.linear_values(values)
 
         attention = torch.softmax(
-            (q @ k.transpose(-2, -1)) / torch.sqrt(q.shape[-1]),
+            (q @ k.transpose(-2, -1)) / self.root_model_dim,
             dim=-1,
         )
         attention = self.dropout(attention)
