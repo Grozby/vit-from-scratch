@@ -29,14 +29,13 @@ class AttentionScaledDotProduct(nn.Module):
             in_features=model_dim,
             out_features=embedding_dim,
         )
+        self.dropout = nn.Dropout(p=dropout_rate)
 
     def forward(
         self,
         queries: torch.Tensor,
         keys: torch.Tensor,
         values: torch.Tensor,
-        *args,
-        is_training: bool,
     ) -> torch.Tensor:
         q = self.linear_queries(queries)
         k = self.linear_keys(keys)
@@ -46,9 +45,5 @@ class AttentionScaledDotProduct(nn.Module):
             (q @ k.transpose(-2, -1)) / torch.sqrt(q.shape[-1]),
             dim=-1,
         )
-        attention = torch.dropout(
-            attention,
-            self.dropout_rate,
-            train=is_training,
-        )
+        attention = self.dropout(attention)
         return attention @ v
