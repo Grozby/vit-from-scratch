@@ -23,11 +23,13 @@ def get_train_val_loaders(
         root="./dataset/MNIST",
         train=True,
         transform=transform,
+        download=True,
     )
     validation_set = torchvision.datasets.MNIST(
         root="./dataset/MNIST",
         train=False,
         transform=transform,
+        download=True,
     )
 
     train_loader = torch.utils.data.DataLoader(
