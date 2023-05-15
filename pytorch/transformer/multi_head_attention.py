@@ -42,7 +42,7 @@ class MultiHeadAttention(nn.Module):
     ) -> torch.Tensor:
         return self.linear(
             torch.concatenate(
-                *[
+                [
                     attention(
                         queries=queries,
                         keys=keys,
