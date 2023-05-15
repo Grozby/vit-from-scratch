@@ -57,6 +57,15 @@ class ToFlattenedPatches(nn.Module):
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:
         x: torch.Tensor = self.patchyfier(x)
+        batch_size, model_dim, n_patches_width, n_patches_height = x.shape
+        x = torch.reshape(
+            x,
+            shape=[
+                batch_size,
+                (n_patches_width * n_patches_height),
+                model_dim,
+            ],
+        )
         x = self.class_token(x)
         x = self.positional_embedding(x)
         x = self.embedding_dropout(x)
