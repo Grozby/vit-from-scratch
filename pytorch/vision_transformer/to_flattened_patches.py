@@ -45,8 +45,8 @@ class ToFlattenedPatches(nn.Module):
             in_channels=channels,
             out_channels=model_dim,
             kernel_size=patch_size,
-            padding=patch_size,
-            padding_mode="valid",
+            stride=patch_size,
+            padding="valid",
         )
         self.class_token = ClassToken(model_dim=model_dim)
         self.positional_embedding = PositionalEmbedding(
