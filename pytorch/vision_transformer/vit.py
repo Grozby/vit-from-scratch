@@ -68,5 +68,4 @@ class ViT(nn.Module):
         for e in self.encoder:
             x = e(x)
         x = x[:, 0]
-        x = self.linear(x)
-        return self.log_softmax(x)
+        return self.linear(x)
