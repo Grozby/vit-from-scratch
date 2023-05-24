@@ -68,6 +68,10 @@ class Trainer:
         self._tensorboard_writer = SummaryWriter(f'mnist/{self._timestamp}')
         self.epochs = epochs
 
+        self.device = torch.device('cuda')
+        self.model.to(self.device)
+        self.loss_fn.to(self.device)
+
     def train_one_epoch(self):
         self._current_epoch += 1
         self.model.train(True)
@@ -78,6 +82,7 @@ class Trainer:
         for i, data in enumerate((pbar := tqdm(self.train_loader))):
             # Every data instance is an input + label pair
             inputs, labels = data
+            inputs, labels = inputs.to(self.device), labels.to(self.device)
 
             # Zero your gradients for every batch!
             self.optimizer.zero_grad()
@@ -110,6 +115,7 @@ class Trainer:
         total_loss = 0.0
         for i, data in enumerate((pbar := tqdm(self.validation_loader))):
             inputs, labels = data
+            inputs, labels = inputs.to(self.device), labels.to(self.device)
             outputs = self.model(inputs)
             total_loss += self.loss_fn(outputs, labels)
             pbar.set_description(desc=f"Batch: {i + 1: <8} | "
