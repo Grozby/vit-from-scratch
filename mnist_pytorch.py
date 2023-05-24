@@ -6,13 +6,13 @@ import torch.utils.data
 import torchvision
 import torchvision.transforms as transforms
 from torch.utils.tensorboard import SummaryWriter
-import numpy as np
 from tqdm import tqdm
 
 from pytorch.vision_transformer.vit import ViT
 
 
 def get_train_val_loaders(
+    batch_size: int = 256,
 ) -> Tuple[torch.utils.data.DataLoader, torch.utils.data.DataLoader]:
     transform = transforms.Compose([
         transforms.ToTensor(),
@@ -34,12 +34,12 @@ def get_train_val_loaders(
 
     train_loader = torch.utils.data.DataLoader(
         train_set,
-        batch_size=128,
+        batch_size=batch_size,
         shuffle=True,
     )
     validation_loader = torch.utils.data.DataLoader(
         validation_set,
-        batch_size=128,
+        batch_size=batch_size,
     )
     return train_loader, validation_loader
 
